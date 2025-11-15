@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -22,7 +22,49 @@ export default function Index() {
   const [loading, setLoading] = useState(false);
   const [selectedFormat, setSelectedFormat] = useState<'mp4' | 'mp3'>('mp4');
   const [selectedQuality, setSelectedQuality] = useState('720p');
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [isInstalled, setIsInstalled] = useState(false);
   const { toast } = useToast();
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+
+    const checkIfInstalled = () => {
+      if (window.matchMedia('(display-mode: standalone)').matches) {
+        setIsInstalled(true);
+      }
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.addEventListener('appinstalled', () => {
+      setIsInstalled(true);
+      setDeferredPrompt(null);
+      toast({
+        title: '🎉 Приложение установлено!',
+        description: 'Теперь вы можете использовать YTDownloader как приложение',
+      });
+    });
+
+    checkIfInstalled();
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
+  }, [toast]);
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) return;
+
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+
+    if (outcome === 'accepted') {
+      setDeferredPrompt(null);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -267,9 +309,34 @@ export default function Index() {
             <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/20 rounded-full mb-4">
               <Icon name="Smartphone" size={32} className="text-primary" />
             </div>
-            <h2 className="text-3xl font-bold mb-2">Скачайте Android приложение</h2>
+            <h2 className="text-3xl font-bold mb-2">Установите приложение</h2>
             <p className="text-muted-foreground">Загружайте видео прямо с телефона — быстро и удобно</p>
           </div>
+
+          {!isInstalled && deferredPrompt && (
+            <div className="mb-6">
+              <Button
+                onClick={handleInstallClick}
+                size="lg"
+                className="w-full h-14 text-lg font-semibold bg-gradient-to-r from-primary to-red-600 hover:from-red-600 hover:to-primary transition-all duration-300 shadow-lg hover:shadow-primary/50"
+              >
+                <Icon name="Download" size={24} className="mr-2" />
+                Установить приложение
+              </Button>
+              <p className="text-center text-sm text-muted-foreground mt-3">
+                Работает на Android и iOS
+              </p>
+            </div>
+          )}
+
+          {isInstalled && (
+            <div className="mb-6 p-4 bg-primary/10 rounded-lg border border-primary/20">
+              <div className="flex items-center justify-center gap-2 text-primary">
+                <Icon name="CheckCircle" size={24} />
+                <span className="font-semibold">Приложение установлено!</span>
+              </div>
+            </div>
+          )}
 
           <div className="flex flex-col md:flex-row items-center justify-center gap-8">
             <div className="bg-white p-4 rounded-xl shadow-lg">

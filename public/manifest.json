@@ -1,0 +1,47 @@
+{
+  "name": "YT Downloader - Скачивание видео с YouTube",
+  "short_name": "YTDownloader",
+  "description": "Скачивайте видео и музыку с YouTube в высоком качестве. Быстро, удобно, бесплатно.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0F0F0F",
+  "theme_color": "#FF0000",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "https://cdn.poehali.dev/projects/4684fb00-de66-43e2-a2eb-3352a138f49d/files/37f05292-bfb8-4b51-aead-36677edb2f85.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://cdn.poehali.dev/projects/4684fb00-de66-43e2-a2eb-3352a138f49d/files/37f05292-bfb8-4b51-aead-36677edb2f85.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["entertainment", "utilities", "productivity"],
+  "shortcuts": [
+    {
+      "name": "Скачать видео",
+      "short_name": "Видео",
+      "description": "Быстро скачать видео",
+      "url": "/?action=download",
+      "icons": [
+        {
+          "src": "https://cdn.poehali.dev/projects/4684fb00-de66-43e2-a2eb-3352a138f49d/files/37f05292-bfb8-4b51-aead-36677edb2f85.jpg",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "https://cdn.poehali.dev/projects/4684fb00-de66-43e2-a2eb-3352a138f49d/files/37f05292-bfb8-4b51-aead-36677edb2f85.jpg",
+      "sizes": "540x720",
+      "type": "image/jpeg",
+      "form_factor": "narrow"
+    }
+  ]
+}
