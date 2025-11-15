@@ -1,0 +1,22 @@
+{
+  "tests": [
+    {
+      "name": "Get video info with valid URL",
+      "method": "GET",
+      "path": "/?url=https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "expectedStatus": 200,
+      "expectedBody": {
+        "video_id": "string",
+        "title": "string",
+        "thumbnail": "string"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Handle OPTIONS request",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "tests": [
+    {
+      "name": "Generate download link",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "video_id": "dQw4w9WgXcQ",
+        "format": "mp4",
+        "quality": "720p"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "download_url": "string",
+        "video_id": "string",
+        "format": "string"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Handle OPTIONS request",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200
+    }
+  ]
+}
